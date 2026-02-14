@@ -1,0 +1,627 @@
+/* Luftborn Design System */
+
+/* ============================================================================
+   VARIABLES
+   ============================================================================ */
+:root {
+  /* Colors - Backgrounds */
+  --bg-primary: #0A0E1A;
+  /* Main page background - deep navy/black */
+  --bg-surface: #111827;
+  /* Cards, panels, elevated surfaces */
+  --bg-surface-hover: #1F2937;
+  /* Hover state for cards */
+  --bg-input: #1F2937;
+  /* Input fields background */
+  --bg-sidebar: #0A0E1A;
+  /* Sidebar background (same as primary) */
+
+  /* Colors - Text */
+  --text-primary: #FFFFFF;
+  /* Headings, important text */
+  --text-secondary: #D1D5DB;
+  /* Body text, descriptions */
+  --text-tertiary: #9CA3AF;
+  /* Subtle text, placeholders */
+  --text-muted: #6B7280;
+  /* Disabled or very subtle text */
+
+  /* Colors - Accents */
+  --accent-orange: #FF7E31;
+  /* Primary brand orange */
+  --accent-orange-light: #FB9C63;
+  /* Secondary orange (lighter) */
+  --accent-orange-glow: rgba(255, 126, 49, 0.2);
+  /* Glow effect */
+
+  /* Colors - Borders */
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  /* Subtle borders */
+  --border-medium: rgba(255, 255, 255, 0.15);
+  /* Medium borders */
+  --border-hover: rgba(255, 126, 49, 0.3);
+  /* Hover state border */
+  --border-focus: #FF7E31;
+  /* Focus state border */
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  /* 12px - tiny labels */
+  --text-sm: 0.875rem;
+  /* 14px - small text, captions */
+  --text-base: 1rem;
+  /* 16px - body text */
+  --text-lg: 1.125rem;
+  /* 18px - large body */
+  --text-xl: 1.25rem;
+  /* 20px - h3 */
+  --text-2xl: 1.5rem;
+  /* 24px - h2 */
+  --text-3xl: 1.875rem;
+  /* 30px - h2 */
+  --text-4xl: 2.25rem;
+  /* 36px - h1 */
+  --text-5xl: 3rem;
+  /* 48px - hero */
+  --text-6xl: 3.75rem;
+  /* 60px - large hero */
+
+  /* Font Weights */
+  --font-regular: 400;
+  /* Body text */
+  --font-medium: 500;
+  /* Emphasized text */
+  --font-semibold: 600;
+  /* Subheadings, buttons */
+  --font-bold: 700;
+  /* Main headings */
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  /* Headings */
+  --leading-normal: 1.5;
+  /* Body text */
+  --leading-relaxed: 1.75;
+  /* Spacious paragraphs */
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  /* 4px */
+  --space-2: 0.5rem;
+  /* 8px */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-5: 1.25rem;
+  /* 20px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+  --space-16: 4rem;
+  /* 64px */
+  --space-20: 5rem;
+  /* 80px */
+  --space-24: 6rem;
+  /* 96px */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  --shadow-glow-sm: 0 0 10px rgba(255, 126, 49, 0.2);
+  --shadow-glow-md: 0 0 20px rgba(255, 126, 49, 0.3);
+  --shadow-glow-lg: 0 0 30px rgba(255, 126, 49, 0.4);
+
+  /* Transitions */
+  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================================
+   RESET & BASE
+   ============================================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh;
+}
+
+/* ============================================================================
+   TYPOGRAPHY
+   ============================================================================ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+h1 {
+  font-size: var(--text-4xl);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+}
+
+h4 {
+  font-size: var(--text-xl);
+}
+
+h5 {
+  font-size: var(--text-lg);
+}
+
+p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
+a {
+  color: var(--accent-orange);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+a:hover {
+  color: var(--accent-orange-light);
+}
+
+/* ============================================================================
+   UTILITIES
+   ============================================================================ */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-2 {
+  gap: var(--space-2);
+}
+
+.gap-4 {
+  gap: var(--space-4);
+}
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
+.mb-4 {
+  margin-bottom: var(--space-4);
+}
+
+.p-4 {
+  padding: var(--space-4);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  border: 1px solid transparent;
+  border-radius: var(--space-2);
+  cursor: pointer;
+  transition: var(--transition-base);
+  gap: var(--space-2);
+  line-height: var(--leading-normal);
+}
+
+/* Primary Button (CTA) */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+  color: var(--text-primary);
+  border: none;
+  box-shadow: var(--shadow-glow-md);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-glow-lg);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-orange);
+  border: 2px solid var(--accent-orange);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 126, 49, 0.1);
+  border-color: var(--accent-orange-light);
+  color: var(--accent-orange-light);
+}
+
+/* Ghost Button */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Icon Button */
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--space-2);
+  padding: 0;
+  color: var(--text-secondary);
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-hover);
+  color: var(--accent-orange);
+}
+
+/* ============================================================================
+   FORMS
+   ============================================================================ */
+/* Text Input */
+.input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  transition: var(--transition-base);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover {
+  border-color: var(--border-medium);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 3px var(--accent-orange-glow);
+  background: var(--bg-surface);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Select Dropdown */
+.select {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: var(--transition-base);
+  appearance: none;
+  /* Add arrow icon background here using data URI if needed, or rely on wrapper */
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 3px var(--accent-orange-glow);
+}
+
+/* Checkbox */
+.checkbox {
+  width: 18px;
+  height: 18px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--space-1);
+  cursor: pointer;
+  transition: var(--transition-base);
+  appearance: none;
+  position: relative;
+}
+
+.checkbox:checked {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+  border-color: var(--accent-orange);
+}
+
+.checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ============================================================================
+   CARDS
+   ============================================================================ */
+/* Standard Card */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  padding: var(--space-6);
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.card-header {
+  margin-bottom: var(--space-4);
+}
+
+.card-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.card-description {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+/* Interactive Card */
+.card-interactive {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  padding: var(--space-6);
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-interactive:hover {
+  border-color: rgba(255, 126, 49, 0.5);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-6px);
+}
+
+/* ============================================================================
+   TABLES
+   ============================================================================ */
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  background: var(--bg-surface);
+  padding: var(--space-4) var(--space-6);
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.table td {
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-primary);
+  transition: var(--transition-base);
+}
+
+.table tr:hover td {
+  background: var(--bg-surface);
+}
+
+/* ============================================================================
+   BADGES
+   ============================================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 9999px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-primary {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+  color: var(--text-primary);
+}
+
+.badge-secondary {
+  background: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-warning {
+  background: rgba(251, 191, 36, 0.2);
+  color: #FBBF24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.badge-error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ============================================================================
+   LOADING
+   ============================================================================ */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent-orange-glow);
+  border-top-color: var(--accent-orange);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================================
+   MODALS / DIALOGS
+   ============================================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: var(--space-8);
+  max-width: 500px;
+  width: 90%;
+  box-shadow: var(--shadow-2xl);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.modal-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: 0;
+}

@@ -34,12 +34,19 @@ export interface PagedResult<T> {
 export class ProductService {
   private apiUrl = `${environment.apiUrl}/products`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(pageNumber: number = 1, pageSize: number = 10): Observable<PagedResult<Product>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
+    return this.http.get<PagedResult<Product>>(this.apiUrl, { params });
+  }
+
+  getAllProducts(): Observable<PagedResult<Product>> {
+    const params = new HttpParams()
+      .set('pageNumber', '1')
+      .set('pageSize', '10000'); // Fetch all for export
     return this.http.get<PagedResult<Product>>(this.apiUrl, { params });
   }
 

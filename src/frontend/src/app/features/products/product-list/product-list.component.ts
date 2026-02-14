@@ -9,8 +9,16 @@ import { ProductService, Product, PagedResult } from '../../../core/services/pro
   imports: [CommonModule, RouterLink],
   template: `
     <div class="container">
-      <div class="page-header">
+      <div class="page-header d-flex justify-content-between align-items-center">
         <h1>Products</h1>
+        <div class="actions">
+          <button (click)="exportProducts()" class="btn btn-outline-success me-2" [disabled]="loading">
+            <i class="fas fa-file-export me-1"></i> Export
+          </button>
+          <a routerLink="/products/create" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> New Product
+          </a>
+        </div>
       </div>
 
       @if (loading) {
@@ -131,7 +139,7 @@ export class ProductListComponent implements OnInit {
   };
   loading = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -165,5 +173,38 @@ export class ProductListComponent implements OnInit {
       this.pagedResult.pageNumber--;
       this.loadProducts();
     }
+  }
+
+  exportProducts(): void {
+    this.loading = true;
+    this.productService.getAllProducts().subscribe({
+      next: (result) => {
+        this.downloadCsv(result.items);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error exporting products:', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  private downloadCsv(data: Product[]): void {
+    const replacer = (key: string, value: any) => value === null ? '' : value;
+    const header = Object.keys(data[0]);
+    const csv = [
+      header.join(','), // header row labels
+      ...data.map(row => header.map(fieldName => JSON.stringify((row as any)[fieldName], replacer)).join(','))
+    ].join('\r\n');
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'products.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 }

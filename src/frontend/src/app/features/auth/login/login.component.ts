@@ -9,63 +9,58 @@ import { AuthService } from '../../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="container">
+    <div class="login-page" [class.page-exit]="isAnimating">
       <div class="auth-container">
         <div class="card auth-card">
-          <h1>Login to Luftborn</h1>
+          <div class="brand-header">
+            <img src="assets/collapse-icon.svg" alt="Luftborn" class="brand-logo">
+          </div>
+          <h1>Welcome Back</h1>
+          <p class="subtitle">Enter your credentials to access the portal</p>
+          
           <form (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <label>Email</label>
-              <input type="email" [(ngModel)]="email" name="email" required>
+              <label>Email Address</label>
+              <input type="email" [(ngModel)]="email" name="email" required placeholder="name@company.com">
             </div>
             <div class="form-group">
               <label>Password</label>
-              <input type="password" [(ngModel)]="password" name="password" required>
+              <input type="password" [(ngModel)]="password" name="password" required placeholder="••••••••">
             </div>
             @if (error) {
-              <div class="error-message">{{ error }}</div>
+              <div class="error-message">
+                <span class="icon">!</span> {{ error }}
+              </div>
             }
-            <button type="submit" class="btn btn-primary" [disabled]="loading">
-              {{ loading ? 'Logging in...' : 'Login' }}
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+              @if (loading) {
+                <span class="spinner-sm"></span> Processing...
+              } @else {
+                Sign In
+              }
             </button>
           </form>
-          <p class="text-center mt-lg">
-            Don't have an account? <a routerLink="/auth/register">Register</a>
-          </p>
+          
+          <div class="auth-footer">
+            <p>Don't have an account? <a routerLink="/auth/register">Create one</a></p>
+          </div>
         </div>
       </div>
     </div>
   `,
-  styles: [`
-    .auth-container {
-      max-width: 400px;
-      margin: 4rem auto;
-    }
-
-    .auth-card {
-      padding: 2rem;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    button[type="submit"] {
-      width: 100%;
-    }
-  `]
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   email = '';
   password = '';
   loading = false;
   error = '';
+  isAnimating = false;
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   onSubmit(): void {
     this.loading = true;
@@ -73,7 +68,10 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.password).subscribe({
       next: () => {
-        this.router.navigate(['/products']);
+        this.isAnimating = true;
+        setTimeout(() => {
+          this.router.navigate(['/products']);
+        }, 1500);
       },
       error: (err) => {
         this.error = 'Invalid email or password';
