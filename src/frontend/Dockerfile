@@ -5,18 +5,18 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (use npm ci for faster, deterministic builds)
+RUN npm ci --only=production=false
 
 # Copy source
 COPY . .
 
-# Build for production
-RUN npm run build
+# Build for production with configuration
+RUN npm run build -- --configuration production
 
 # Production stage
 FROM nginx:alpine
-COPY --from=build /app/dist/luftborn-frontend/browser /usr/share/nginx/html
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

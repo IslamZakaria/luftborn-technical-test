@@ -3,9 +3,9 @@ services:
     image: postgres:16-alpine
     container_name: luftborn-postgres
     environment:
-      POSTGRES_DB: luftborn_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DATABASE_NAME:-luftborn_db}
+      POSTGRES_USER: ${DATABASE_USER:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
     ports:
       - "5432:5432"
     volumes:
@@ -24,9 +24,14 @@ services:
       dockerfile: Dockerfile
     container_name: luftborn-api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=5000
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=luftborn_db;Username=postgres;Password=postgres
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
+      - ASPNETCORE_HTTP_PORTS=${ASPNETCORE_HTTP_PORTS:-5000}
+      - ConnectionStrings__DefaultConnection=Host=${DATABASE_HOST:-postgres};Port=${DATABASE_PORT:-5432};Database=${DATABASE_NAME:-luftborn_db};Username=${DATABASE_USER:-postgres};Password=${DATABASE_PASSWORD:-postgres}
+      - Jwt__Secret=${JWT_SECRET}
+      - Jwt__Issuer=${JWT_ISSUER:-luftborn-api}
+      - Jwt__Audience=${JWT_AUDIENCE:-luftborn-client}
+      - Jwt__ExpirationMinutes=${JWT_EXPIRATION_MINUTES:-60}
+      - Cors__Origins=${CORS_ORIGINS:-http://localhost:4200}
     ports:
       - "5000:5000"
     depends_on:
@@ -36,6 +41,12 @@ services:
       - luftborn-network
     volumes:
       - ./src/backend/Luftborn.Api/logs:/app/logs
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   frontend:
     build:
@@ -48,6 +59,11 @@ services:
       - backend
     networks:
       - luftborn-network
+    healthcheck:
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   postgres_data:
