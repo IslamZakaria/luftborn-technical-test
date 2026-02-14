@@ -33,6 +33,14 @@
                 padding: 0;
             }
         }
+
+        .toggle-btn {
+            justify-content: center;
+
+            .icon {
+                transform: rotate(180deg);
+            }
+        }
     }
 }
 
@@ -112,8 +120,41 @@
     }
 }
 
+.toggle-btn {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-6);
+    margin: var(--space-1) var(--space-3) auto;
+    /* auto margin bottom pushes footer down */
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-base);
+    border-radius: var(--space-2);
+    width: fit-content;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-primary);
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
+        background: currentColor;
+        mask-image: url('collapse-icon.svg');
+        -webkit-mask-image: url('collapse-icon.svg');
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        transition: transform 0.3s ease;
+    }
+}
+
 .sidebar-footer {
-    margin-top: auto;
+    margin-top: 0;
+    /* Changed from auto since toggle button handles spacing */
     padding: var(--space-6);
     border-top: 1px solid var(--border-subtle);
 }

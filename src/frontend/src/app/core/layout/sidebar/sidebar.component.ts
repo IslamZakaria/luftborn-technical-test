@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LayoutService } from '../../services/layout.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -12,6 +13,9 @@ import { LayoutService } from '../../services/layout.service';
 })
 export class SidebarComponent {
     layoutService = inject(LayoutService);
+    authService = inject(AuthService);
+
+    currentUser$ = this.authService.currentUser$;
 
     navItems = [
         { label: 'Products', icon: 'assets/icons/products.svg', route: '/products' }
