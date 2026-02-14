@@ -3,6 +3,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+export enum ProductCategory {
+  Electronics = 1,
+  Clothing = 2,
+  Home = 3,
+  Sports = 4,
+  Books = 5,
+  Toys = 6,
+  Other = 7
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -10,12 +20,34 @@ export interface Product {
   sku: string;
   price: number;
   stockQuantity: number;
-  category: number;
+  category: ProductCategory;
   categoryName: string;
   imageUrl: string;
   isActive: boolean;
   createdAt: string;
   updatedAt?: string;
+}
+
+export interface CreateProductDto {
+  name: string;
+  description: string;
+  sku: string;
+  price: number;
+  stockQuantity: number;
+  category: ProductCategory;
+  imageUrl: string;
+  isActive: boolean;
+}
+
+export interface UpdateProductDto {
+  name: string;
+  description: string;
+  sku: string;
+  price: number;
+  stockQuantity: number;
+  category: ProductCategory;
+  imageUrl: string;
+  isActive: boolean;
 }
 
 export interface PagedResult<T> {
@@ -54,11 +86,11 @@ export class ProductService {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
-  createProduct(product: Partial<Product>): Observable<Product> {
+  createProduct(product: CreateProductDto): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product);
   }
 
-  updateProduct(id: number, product: Partial<Product>): Observable<Product> {
+  updateProduct(id: number, product: UpdateProductDto): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
   }
 

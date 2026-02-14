@@ -27,8 +27,8 @@ export class AuthService {
     this.loadUserFromStorage();
   }
 
-  register(data: any): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, data)
+  register(email: string, password: string, name?: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, { email, password, name })
       .pipe(tap(response => this.handleAuthResponse(response)));
   }
 

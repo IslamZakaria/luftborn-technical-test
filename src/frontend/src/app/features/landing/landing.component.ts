@@ -274,39 +274,91 @@ import { RouterLink } from '@angular/router';
     .btn-hero {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2);
+      gap: var(--space-3);
       padding: var(--space-4) var(--space-8);
       font-size: var(--text-base);
       font-weight: var(--font-semibold);
       border-radius: var(--space-3);
-      transition: var(--transition-base);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-hero i {
+      font-size: 1.25rem;
+      transition: transform 0.3s ease;
     }
 
     .btn-hero-primary {
-      background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+      background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
       color: var(--text-primary);
-      box-shadow: var(--shadow-glow-lg);
+      box-shadow: 0 8px 24px rgba(255, 126, 49, 0.35), 0 4px 12px rgba(255, 126, 49, 0.2);
       border: none;
     }
 
+    .btn-hero-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-orange-light) 0%, var(--accent-orange) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
     .btn-hero-primary:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 40px rgba(255, 126, 49, 0.5);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(255, 126, 49, 0.5), 0 8px 20px rgba(255, 126, 49, 0.3);
+    }
+
+    .btn-hero-primary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-hero-primary:hover i {
+      transform: translateX(4px);
+    }
+
+    .btn-hero-primary:active {
+      transform: translateY(-2px) scale(0.98);
     }
 
     .btn-hero-secondary {
       background: rgba(255, 255, 255, 0.05);
-      border: 2px solid var(--border-medium);
+      border: 2px solid rgba(255, 126, 49, 0.3);
       color: var(--text-primary);
       backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .btn-hero-secondary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 126, 49, 0.1) 0%, rgba(255, 126, 49, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: var(--space-3);
     }
 
     .btn-hero-secondary:hover {
       background: rgba(255, 255, 255, 0.1);
       border-color: var(--accent-orange);
-      transform: translateY(-4px);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(255, 126, 49, 0.25), 0 6px 16px rgba(255, 126, 49, 0.15);
+    }
+
+    .btn-hero-secondary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-hero-secondary:hover i {
+      transform: scale(1.1);
+    }
+
+    .btn-hero-secondary:active {
+      transform: translateY(-2px) scale(0.98);
     }
 
     /* Context Section */

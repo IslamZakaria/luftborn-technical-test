@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ProductService, Product } from '../../../core/services/product.service';
+import { ProductService, Product, UpdateProductDto, ProductCategory } from '../../../core/services/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,7 +16,7 @@ import { ProductService, Product } from '../../../core/services/product.service'
           <button *ngIf="!isEditing" (click)="enableEdit()" class="btn btn-primary me-2">
             <i class="fas fa-edit me-1"></i> Edit
           </button>
-          <button *ngIf="!isEditing" (click)="widthDelete()" class="btn btn-danger me-2">
+          <button *ngIf="!isEditing" (click)="confirmDelete()" class="btn btn-danger me-2">
             <i class="fas fa-trash me-1"></i> Delete
           </button>
           <button *ngIf="isEditing" (click)="saveChanges()" class="btn btn-success me-2" [disabled]="loading">
@@ -47,8 +47,24 @@ import { ProductService, Product } from '../../../core/services/product.service'
               <div class="col-md-9">{{ product.stockQuantity }}</div>
             </div>
             <div class="row mb-3">
+              <div class="col-md-3 fw-bold">Category:</div>
+              <div class="col-md-9">{{ product.categoryName }}</div>
+            </div>
+            <div class="row mb-3">
               <div class="col-md-3 fw-bold">Description:</div>
               <div class="col-md-9">{{ product.description }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-3 fw-bold">Image URL:</div>
+              <div class="col-md-9">{{ product.imageUrl || 'N/A' }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-3 fw-bold">Status:</div>
+              <div class="col-md-9">
+                <span class="badge" [class.bg-success]="product.isActive" [class.bg-secondary]="!product.isActive">
+                  {{ product.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -70,12 +86,28 @@ import { ProductService, Product } from '../../../core/services/product.service'
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="number" class="form-control" id="price" required min="0.01" [(ngModel)]="editProduct.price" name="price">
+                <input type="number" class="form-control" id="price" required min="0.01" step="0.01" [(ngModel)]="editProduct.price" name="price">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="stockQuantity" class="form-label">Stock</label>
                 <input type="number" class="form-control" id="stockQuantity" required min="0" [(ngModel)]="editProduct.stockQuantity" name="stockQuantity">
               </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-control" id="category" required [(ngModel)]="editProduct.category" name="category">
+                  <option *ngFor="let cat of categories" [ngValue]="cat.value">{{ cat.label }}</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="imageUrl" class="form-label">Image URL</label>
+                <input type="text" class="form-control" id="imageUrl" [(ngModel)]="editProduct.imageUrl" name="imageUrl">
+              </div>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="isActive" [(ngModel)]="editProduct.isActive" name="isActive">
+              <label class="form-check-label" for="isActive">Active</label>
             </div>
           </form>
           
@@ -97,7 +129,27 @@ import { ProductService, Product } from '../../../core/services/product.service'
 })
 export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
-  editProduct: Partial<Product> = {};
+  editProduct: UpdateProductDto = {
+    name: '',
+    description: '',
+    sku: '',
+    price: 0,
+    stockQuantity: 0,
+    category: ProductCategory.Electronics,
+    imageUrl: '',
+    isActive: true
+  };
+
+  categories = [
+    { value: ProductCategory.Electronics, label: 'Electronics' },
+    { value: ProductCategory.Clothing, label: 'Clothing' },
+    { value: ProductCategory.Home, label: 'Home' },
+    { value: ProductCategory.Sports, label: 'Sports' },
+    { value: ProductCategory.Books, label: 'Books' },
+    { value: ProductCategory.Toys, label: 'Toys' },
+    { value: ProductCategory.Other, label: 'Other' }
+  ];
+
   isEditing = false;
   loading = false;
   error = '';
@@ -132,14 +184,22 @@ export class ProductDetailComponent implements OnInit {
 
   enableEdit(): void {
     if (this.product) {
-      this.editProduct = { ...this.product };
+      this.editProduct = {
+        name: this.product.name,
+        description: this.product.description,
+        sku: this.product.sku,
+        price: this.product.price,
+        stockQuantity: this.product.stockQuantity,
+        category: this.product.category,
+        imageUrl: this.product.imageUrl,
+        isActive: this.product.isActive
+      };
       this.isEditing = true;
     }
   }
 
   cancelEdit(): void {
     this.isEditing = false;
-    this.editProduct = {};
     this.error = '';
   }
 
@@ -161,7 +221,7 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  widthDelete(): void {
+  confirmDelete(): void {
     if (!this.product || !confirm('Are you sure you want to delete this product?')) return;
 
     this.loading = true;

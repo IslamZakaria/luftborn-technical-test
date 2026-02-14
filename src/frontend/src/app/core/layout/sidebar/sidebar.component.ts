@@ -14,9 +14,7 @@ export class SidebarComponent {
     layoutService = inject(LayoutService);
 
     navItems = [
-        { label: 'Dashboard', icon: 'assets/icons/dashboard.svg', route: '/dashboard' },
-        { label: 'Products', icon: 'assets/icons/products.svg', route: '/products' },
-        // Add more items as needed
+        { label: 'Products', icon: 'assets/icons/products.svg', route: '/products' }
     ];
 
     get collapsed() {
