@@ -1,16 +1,18 @@
 <aside class="sidebar" [class.collapsed]="collapsed">
   <div class="sidebar-logo">
-    <!-- Placeholder for logo, replace with actual asset path if available -->
-    <div class="logo-icon">L</div> 
-    <span class="sidebar-logo-text" *ngIf="!collapsed">Luftborn</span>
+    @if (!collapsed) {
+      <img src="assets/expand-icon.svg" alt="Luftborn Logo" class="logo-image">
+      <span class="sidebar-logo-text">Luftborn</span>
+    } @else {
+      <img src="assets/collapse-icon.svg" alt="Luftborn" class="logo-image-collapsed">
+    }
   </div>
 
   <nav class="sidebar-nav">
     <ng-container *ngFor="let item of navItems">
       <a [routerLink]="item.route" routerLinkActive="active" class="nav-item">
         <span class="nav-item-icon">
-            <!-- Icon placeholder -->
-            <i class="icon"></i>
+            <i class="fas fa-box"></i>
         </span>
         <span class="nav-item-text" *ngIf="!collapsed">{{ item.label }}</span>
       </a>
@@ -19,9 +21,9 @@
 
   <div class="sidebar-footer">
     <div class="user-menu">
-      <div class="user-avatar">JM</div>
+      <div class="user-avatar">IM</div>
       <div class="user-info" *ngIf="!collapsed">
-        <span class="user-name">John McGiver</span>
+        <span class="user-name">Islam Mohamed</span>
         <span class="user-role">Admin</span>
       </div>
     </div>

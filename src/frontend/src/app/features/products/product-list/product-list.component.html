@@ -1,0 +1,239 @@
+<div class="product-list-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Products</h1>
+      <p class="subtitle">Manage your product catalog</p>
+    </div>
+    <div class="header-actions">
+      <button (click)="exportProducts()" class="btn btn-secondary" [disabled]="loading">
+        <i class="fas fa-file-export"></i>
+        <span>Export CSV</span>
+      </button>
+      <a routerLink="/products/create" class="btn btn-primary">
+        <i class="fas fa-plus"></i>
+        <span>Add Product</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (loading && products.length === 0) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading products...</p>
+    </div>
+  }
+
+  <!-- Table -->
+  @if (!loading || products.length > 0) {
+    <div class="table-card">
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>SKU</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th class="actions-column">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (products.length === 0) {
+              <tr>
+                <td colspan="8" class="no-data">
+                  <div class="empty-state">
+                    <i class="fas fa-box-open"></i>
+                    <p>No products found</p>
+                    <a routerLink="/products/create" class="btn btn-primary">Create your first product</a>
+                  </div>
+                </td>
+              </tr>
+            } @else {
+              @for (product of products; track product.id) {
+                <tr>
+                  <td>
+                    @if (product.imageUrl) {
+                      <img [src]="product.imageUrl" [alt]="product.name" class="product-thumbnail">
+                    } @else {
+                      <div class="product-thumbnail-placeholder">
+                        <i class="fas fa-image"></i>
+                      </div>
+                    }
+                  </td>
+                  <td>
+                    <div class="product-name">{{ product.name }}</div>
+                  </td>
+                  <td>
+                    <span class="sku">{{ product.sku }}</span>
+                  </td>
+                  <td>
+                    <span class="price">\${{ product.price.toFixed(2) }}</span>
+                  </td>
+                  <td>
+                    <span class="stock" [class.low-stock]="product.stockQuantity < 10">
+                      {{ product.stockQuantity }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="category">{{ product.categoryName }}</span>
+                  </td>
+                  <td>
+                    <span class="badge" [class.badge-success]="product.isActive" [class.badge-secondary]="!product.isActive">
+                      {{ product.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  </td>
+                  <td class="actions-column">
+                    <div class="action-buttons">
+                      <button (click)="viewDetails(product)" class="btn-icon" title="View Details">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <a [routerLink]="['/products', product.id]" class="btn-icon" title="Edit">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <button (click)="confirmDelete(product)" class="btn-icon btn-danger" title="Delete">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      @if (pagedResult.totalCount > 0) {
+        <div class="pagination-container">
+          <div class="pagination-info">
+            <span>Showing {{ startIndex }} to {{ endIndex }} of {{ pagedResult.totalCount }} products</span>
+            <div class="page-size-selector">
+              <label for="pageSize">Items per page:</label>
+              <select id="pageSize" [(ngModel)]="pagedResult.pageSize" (change)="onPageSizeChange()" class="select">
+                @for (size of pageSizeOptions; track size) {
+                  <option [value]="size">{{ size }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="pagination-controls">
+            <button (click)="firstPage()" [disabled]="!pagedResult.hasPreviousPage" class="btn btn-ghost" title="First Page">
+              <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button (click)="previousPage()" [disabled]="!pagedResult.hasPreviousPage" class="btn btn-ghost">
+              <i class="fas fa-angle-left"></i>
+              <span>Previous</span>
+            </button>
+            <span class="page-indicator">Page {{ pagedResult.pageNumber }} of {{ pagedResult.totalPages }}</span>
+            <button (click)="nextPage()" [disabled]="!pagedResult.hasNextPage" class="btn btn-ghost">
+              <span>Next</span>
+              <i class="fas fa-angle-right"></i>
+            </button>
+            <button (click)="lastPage()" [disabled]="!pagedResult.hasNextPage" class="btn btn-ghost" title="Last Page">
+              <i class="fas fa-angle-double-right"></i>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Details Dialog -->
+  @if (showDetailsDialog && selectedProduct) {
+    <div class="modal-overlay" (click)="closeDetailsDialog()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Product Details</h3>
+          <button (click)="closeDetailsDialog()" class="btn-icon">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          @if (selectedProduct.imageUrl) {
+            <img [src]="selectedProduct.imageUrl" [alt]="selectedProduct.name" class="detail-image">
+          }
+          <div class="detail-grid">
+            <div class="detail-item">
+              <label>Name</label>
+              <p>{{ selectedProduct.name }}</p>
+            </div>
+            <div class="detail-item">
+              <label>SKU</label>
+              <p>{{ selectedProduct.sku }}</p>
+            </div>
+            <div class="detail-item">
+              <label>Description</label>
+              <p>{{ selectedProduct.description }}</p>
+            </div>
+            <div class="detail-item">
+              <label>Price</label>
+              <p class="price">\${{ selectedProduct.price.toFixed(2) }}</p>
+            </div>
+            <div class="detail-item">
+              <label>Stock Quantity</label>
+              <p>{{ selectedProduct.stockQuantity }}</p>
+            </div>
+            <div class="detail-item">
+              <label>Category</label>
+              <p>{{ selectedProduct.categoryName }}</p>
+            </div>
+            <div class="detail-item">
+              <label>Status</label>
+              <p>
+                <span class="badge" [class.badge-success]="selectedProduct.isActive" [class.badge-secondary]="!selectedProduct.isActive">
+                  {{ selectedProduct.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </p>
+            </div>
+            <div class="detail-item">
+              <label>Created</label>
+              <p>{{ selectedProduct.createdAt | date:'medium' }}</p>
+            </div>
+            @if (selectedProduct.updatedAt) {
+              <div class="detail-item">
+                <label>Last Updated</label>
+                <p>{{ selectedProduct.updatedAt | date:'medium' }}</p>
+              </div>
+            }
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="closeDetailsDialog()" class="btn btn-secondary">Close</button>
+          <a [routerLink]="['/products', selectedProduct.id]" class="btn btn-primary">Edit Product</a>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Confirmation Dialog -->
+  @if (showDeleteConfirm && productToDelete) {
+    <div class="modal-overlay" (click)="cancelDelete()">
+      <div class="modal modal-sm" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Confirm Delete</h3>
+          <button (click)="cancelDelete()" class="btn-icon">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete <strong>{{ productToDelete.name }}</strong>?</p>
+          <p class="text-muted">This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button (click)="cancelDelete()" class="btn btn-secondary">Cancel</button>
+          <button (click)="deleteProduct()" class="btn btn-danger" [disabled]="loading">
+            @if (loading) {
+              <span class="spinner"></span>
+            }
+            <span>Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

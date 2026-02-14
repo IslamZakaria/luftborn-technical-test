@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
     selector: 'app-header',
@@ -9,5 +10,9 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-    // Add header logic here (e.g., user dropdown toggle, search)
+    layoutService = inject(LayoutService);
+
+    toggleSidebar() {
+        this.layoutService.toggleSidebar();
+    }
 }

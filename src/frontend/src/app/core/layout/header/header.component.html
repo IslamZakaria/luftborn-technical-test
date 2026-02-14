@@ -1,23 +1,23 @@
 <header class="header">
   <div class="header-left">
-    <!-- Placeholder for page title or breadcrumbs -->
+    <button (click)="toggleSidebar()" class="btn-icon sidebar-toggle" aria-label="Toggle Sidebar">
+      <i class="fas fa-bars"></i>
+    </button>
     <h2 class="page-title">Dashboard</h2>
   </div>
 
   <div class="header-right">
     <!-- Actions -->
     <button class="btn-icon" aria-label="Search">
-      <!-- Search Icon Placeholder -->
-      <span class="icon">🔍</span>
+      <i class="fas fa-search"></i>
     </button>
     
     <button class="btn-icon" aria-label="Notifications">
-      <!-- Bell Icon Placeholder -->
-      <span class="icon">🔔</span>
+      <i class="fas fa-bell"></i>
     </button>
 
     <button class="btn-primary">
-      <span class="icon">+</span>
+      <i class="fas fa-plus"></i>
       <span>New Project</span>
     </button>
   </div>

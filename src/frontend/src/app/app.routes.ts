@@ -11,6 +11,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'products',
@@ -25,8 +26,7 @@ export const routes: Routes = [
       {
         path: 'products/create',
         loadComponent: () => import('./features/products/product-create/product-create.component')
-          .then(m => m.ProductCreateComponent),
-        canActivate: [authGuard]
+          .then(m => m.ProductCreateComponent)
       }
     ]
   },

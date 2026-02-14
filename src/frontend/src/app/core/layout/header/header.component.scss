@@ -21,7 +21,13 @@
 .header-left {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-4);
+
+    .sidebar-toggle {
+        @media (max-width: 768px) {
+            display: flex;
+        }
+    }
 
     .page-title {
         font-size: var(--text-2xl);
