@@ -11,6 +11,8 @@
     padding: var(--space-6) 0;
     z-index: 1000;
     transition: width 0.3s ease;
+    /* Allow toggle button to be absolute positioned relative to sidebar */
+    /* overflow: visible; is default but ensuring it for the button sticking out */
 
     &.collapsed {
         width: 80px;
@@ -123,84 +125,34 @@
 .toggle-btn {
     display: flex;
     align-items: center;
-    padding: var(--space-3) var(--space-6);
-    margin: var(--space-1) var(--space-3) auto;
-    /* auto margin bottom pushes footer down */
-    background: transparent;
-    border: none;
+    justify-content: center;
+    padding: var(--space-3);
+    margin-top: auto;
+    /* Push to bottom */
+    margin-right: var(--space-4);
+    margin-left: auto;
+    /* Align to right */
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-base);
-    border-radius: var(--space-2);
-    width: fit-content;
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: var(--text-primary);
-    }
-
-    .icon {
-        width: 20px;
-        height: 20px;
-        background: currentColor;
-        mask-image: url('collapse-icon.svg');
-        -webkit-mask-image: url('collapse-icon.svg');
-        mask-size: contain;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        transition: transform 0.3s ease;
-    }
-}
-
-.sidebar-footer {
-    margin-top: 0;
-    /* Changed from auto since toggle button handles spacing */
-    padding: var(--space-6);
-    border-top: 1px solid var(--border-subtle);
-}
-
-.user-menu {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3);
-    border-radius: var(--space-2);
-    cursor: pointer;
-    transition: var(--transition-base);
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.05);
-    }
-}
-
-.user-avatar {
-    width: 36px;
-    height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: var(--font-semibold);
-    font-size: var(--text-sm);
-    flex-shrink: 0;
-}
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    bottom: var(--space-6);
+    right: -16px;
+    /* Half outside */
+    z-index: 1001;
 
-.user-info {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    .user-name {
-        color: var(--text-primary);
-        font-weight: var(--font-medium);
-        font-size: var(--text-sm);
-        white-space: nowrap;
+    &:hover {
+        background: var(--accent-orange);
+        color: white;
+        border-color: var(--accent-orange);
     }
 
-    .user-role {
-        color: var(--text-tertiary);
-        font-size: var(--text-xs);
+    .rotated {
+        transform: rotate(180deg);
     }
 }

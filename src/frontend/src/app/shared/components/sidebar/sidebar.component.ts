@@ -4,19 +4,16 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LayoutService } from '../../../core/services/layout.service';
 
 @Component({
-    selector: 'app-sidebar',
-    standalone: true,
-    imports: [CommonModule, RouterLink, RouterLinkActive],
-    template: `
+  selector: 'app-sidebar',
+  standalone: true,
+  imports: [CommonModule, RouterLink, RouterLinkActive],
+  template: `
     <aside class="sidebar" [class.collapsed]="layoutService.isSidebarCollapsed()">
       <div class="sidebar-header">
         <div class="logo-container">
           <img [src]="layoutService.isSidebarCollapsed() ? 'assets/collapse-icon.svg' : 'assets/expand-icon.svg'" 
                alt="Luftborn Logo" 
                class="sidebar-logo">
-          @if (!layoutService.isSidebarCollapsed()) {
-            <span class="logo-text">LUFTBORN</span>
-          }
         </div>
         <button class="toggle-btn" (click)="layoutService.toggleSidebar()">
           <i class="fas" [class.fa-chevron-left]="!layoutService.isSidebarCollapsed()" [class.fa-chevron-right]="layoutService.isSidebarCollapsed()"></i>
@@ -34,7 +31,7 @@ import { LayoutService } from '../../../core/services/layout.service';
       </nav>
     </aside>
   `,
-    styles: [`
+  styles: [`
     .sidebar {
       width: 250px;
       height: 100vh;
@@ -135,5 +132,5 @@ import { LayoutService } from '../../../core/services/layout.service';
   `]
 })
 export class SidebarComponent {
-    constructor(public layoutService: LayoutService) { }
+  constructor(public layoutService: LayoutService) { }
 }

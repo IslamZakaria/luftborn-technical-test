@@ -31,7 +31,7 @@
 
 .header-actions {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-4);
 
     @media (max-width: 768px) {
         flex-direction: column;
@@ -321,6 +321,11 @@
 
 .modal-sm {
     max-width: 400px;
+}
+
+.modal-lg {
+    max-width: 900px;
+    width: 90%;
 }
 
 .text-muted {

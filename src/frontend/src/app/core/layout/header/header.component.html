@@ -16,9 +16,14 @@
       <i class="fas fa-bell"></i>
     </button>
 
-    <button class="btn-primary">
-      <i class="fas fa-plus"></i>
-      <span>New Project</span>
-    </button>
+    <div class="user-menu">
+      <div class="user-avatar">
+        {{ (currentUser$ | async)?.firstName?.charAt(0) || 'U' }}{{ (currentUser$ | async)?.lastName?.charAt(0) || '' }}
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ (currentUser$ | async)?.firstName }} {{ (currentUser$ | async)?.lastName }}</span>
+        <span class="user-role">Admin</span>
+      </div>
+    </div>
   </div>
 </header>

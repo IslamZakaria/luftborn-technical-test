@@ -20,18 +20,6 @@
   </nav>
 
   <button class="toggle-btn" (click)="toggleSidebar()">
-    <div class="icon" [class.rotated]="collapsed"></div>
+    <i class="fas fa-chevron-left" [class.rotated]="collapsed"></i>
   </button>
-
-  <div class="sidebar-footer">
-    <div class="user-menu">
-      <div class="user-avatar">
-        {{ (currentUser$ | async)?.firstName?.charAt(0) || 'U' }}{{ (currentUser$ | async)?.lastName?.charAt(0) || '' }}
-      </div>
-      <div class="user-info" *ngIf="!collapsed">
-        <span class="user-name">{{ (currentUser$ | async)?.firstName }} {{ (currentUser$ | async)?.lastName }}</span>
-        <span class="user-role">Admin</span>
-      </div>
-    </div>
-  </div>
 </aside>

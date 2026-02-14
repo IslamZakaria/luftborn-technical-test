@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ProductService, Product, PagedResult } from '../../../core/services/product.service';
+import { ProductService, Product, PagedResult, CreateProductDto, UpdateProductDto } from '../../../core/services/product.service';
+import { ProductFormComponent } from '../product-form/product-form.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, ProductFormComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
@@ -23,10 +24,19 @@ export class ProductListComponent implements OnInit {
     hasNextPage: false
   };
   loading = false;
+
+  // Details Dialog
   selectedProduct: Product | null = null;
   showDetailsDialog = false;
+
+  // Delete Dialog
   showDeleteConfirm = false;
   productToDelete: Product | null = null;
+
+  // Form Dialog
+  showFormDialog = false;
+  editingProduct: Product | null = null;
+
   pageSizeOptions = [10, 25, 50, 100];
 
   constructor(private productService: ProductService) { }
@@ -80,6 +90,7 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
 
+  // Details
   viewDetails(product: Product): void {
     this.selectedProduct = product;
     this.showDetailsDialog = true;
@@ -90,6 +101,56 @@ export class ProductListComponent implements OnInit {
     this.selectedProduct = null;
   }
 
+  // Add/Edit Form
+  openAddDialog(): void {
+    this.editingProduct = null;
+    this.showFormDialog = true;
+  }
+
+  openEditDialog(product: Product): void {
+    this.editingProduct = product;
+    this.showFormDialog = true;
+  }
+
+  closeFormDialog(): void {
+    this.showFormDialog = false;
+    this.editingProduct = null;
+  }
+
+  onFormSave(data: CreateProductDto): void {
+    this.loading = true;
+
+    if (this.editingProduct) {
+      // Update
+      const updateDto: UpdateProductDto = { ...data };
+      this.productService.updateProduct(this.editingProduct.id, updateDto).subscribe({
+        next: () => {
+          this.loading = false;
+          this.closeFormDialog();
+          this.loadProducts();
+        },
+        error: (err) => {
+          console.error('Error updating product:', err);
+          this.loading = false;
+        }
+      });
+    } else {
+      // Create
+      this.productService.createProduct(data).subscribe({
+        next: () => {
+          this.loading = false;
+          this.closeFormDialog();
+          this.loadProducts();
+        },
+        error: (err) => {
+          console.error('Error creating product:', err);
+          this.loading = false;
+        }
+      });
+    }
+  }
+
+  // Delete
   confirmDelete(product: Product): void {
     this.productToDelete = product;
     this.showDeleteConfirm = true;
