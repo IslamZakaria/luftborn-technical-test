@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Luftborn.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/v1/[controller]")]
 public class ProductsController : ControllerBase
 {
@@ -46,7 +47,6 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
     public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] CreateProductDto createDto)
     {
         _logger.LogInformation("Creating new product: {ProductName}", createDto.Name);
@@ -58,7 +58,6 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize]
     public async Task<ActionResult<ProductDto>> UpdateProduct(int id, [FromBody] UpdateProductDto updateDto)
     {
         _logger.LogInformation("Updating product with ID: {ProductId}", id);
@@ -77,7 +76,6 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
     public async Task<IActionResult> DeleteProduct(int id)
     {
         _logger.LogInformation("Deleting product with ID: {ProductId}", id);
