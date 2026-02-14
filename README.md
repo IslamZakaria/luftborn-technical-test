@@ -22,6 +22,9 @@ Full-stack product management system built with **.NET 10**, **Angular 19**, and
 git clone <your-repo-url>
 cd luftborn-technical-test
 
+# Copy environment file
+cp .env.example .env
+
 # Start all services
 docker compose up --build
 ```
