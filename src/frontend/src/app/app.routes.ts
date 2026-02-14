@@ -19,14 +19,14 @@ export const routes: Routes = [
           .then(m => m.ProductListComponent)
       },
       {
-        path: 'products/:id',
-        loadComponent: () => import('./features/products/product-detail/product-detail.component')
-          .then(m => m.ProductDetailComponent)
-      },
-      {
         path: 'products/create',
         loadComponent: () => import('./features/products/product-create/product-create.component')
           .then(m => m.ProductCreateComponent)
+      },
+      {
+        path: 'products/:id',
+        loadComponent: () => import('./features/products/product-detail/product-detail.component')
+          .then(m => m.ProductDetailComponent)
       }
     ]
   },

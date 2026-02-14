@@ -23,12 +23,14 @@ import { RouterLink } from '@angular/router';
         <h1 class="hero-title animate-fade-in-down">Hi, I'm Islam Mohamed</h1>
         <h2 class="hero-subtitle animate-fade-in-up">Senior Software Engineer | Full-Stack Developer</h2>
 
-        <div class="intro-text animate-fade-in-up delay-100">
-          <p class="lead">
-            Results-driven Senior Software Engineer with expertise in .NET, Angular, and cloud technologies.
-            I have extensive experience building scalable fintech and proptech solutions, with a passion for
-            clean architecture, performance optimization, and delivering impactful digital solutions.
-          </p>
+        <div class="intro-grid animate-fade-in-up delay-100">
+          <div class="intro-card glass-card">
+             <p class="lead">
+              Results-driven Senior Software Engineer with expertise in .NET, Angular, and cloud technologies.
+              I have extensive experience building scalable fintech and proptech solutions, with a passion for
+              clean architecture, performance optimization, and delivering impactful digital solutions.
+            </p>
+          </div>
         </div>
 
         <div class="action-buttons animate-fade-in-up delay-200">
@@ -36,11 +38,11 @@ import { RouterLink } from '@angular/router';
             <i class="fa fa-play"></i>
             <span>View Demo</span>
           </a>
-          <a href="https://github.com/IslamZakaria" target="_blank" class="btn-hero btn-hero-secondary">
+          <a href="https://github.com/IslamZakaria" target="_blank" class="btn-hero btn-hero-github">
             <i class="fab fa-github"></i>
             <span>GitHub</span>
           </a>
-          <a href="https://www.linkedin.com/in/islam-mohamed-zakaria/" target="_blank" class="btn-hero btn-hero-secondary">
+          <a href="https://www.linkedin.com/in/islam-mohamed-zakaria/" target="_blank" class="btn-hero btn-hero-linkedin">
             <i class="fab fa-linkedin"></i>
             <span>LinkedIn</span>
           </a>
@@ -125,20 +127,22 @@ import { RouterLink } from '@angular/router';
   `,
   styles: [`
     .landing-page {
-      font-family: var(--font-family);
-      background: var(--bg-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-primary, #0f172a);
+      color: #fff;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* Hero Section with Gradient Background */
     .hero-section {
       position: relative;
-      min-height: 100vh;
+      min-height: 90vh;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      padding: var(--space-16) 0;
+      padding: 4rem 0;
     }
 
     .hero-background {
@@ -146,74 +150,75 @@ import { RouterLink } from '@angular/router';
       inset: 0;
       overflow: hidden;
       z-index: 0;
+      background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
     }
 
     .gradient-orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.6;
+      filter: blur(100px);
+      opacity: 0.4;
       animation: float 20s ease-in-out infinite;
     }
 
     .orb-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, var(--accent-orange) 0%, transparent 70%);
-      top: -10%;
+      width: 600px;
+      height: 600px;
+      background: #FF7E31;
+      top: -20%;
       left: -10%;
       animation-delay: 0s;
     }
 
     .orb-2 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, var(--accent-orange-light) 0%, transparent 70%);
+      width: 500px;
+      height: 500px;
+      background: #3b82f6;
       bottom: -10%;
       right: -10%;
-      animation-delay: 7s;
+      animation-delay: -5s;
     }
 
     .orb-3 {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, #FF7E31 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation-delay: 14s;
+      width: 400px;
+      height: 400px;
+      background: #8b5cf6;
+      top: 40%;
+      left: 60%;
+      opacity: 0.3;
+      animation-delay: -10s;
     }
 
     @keyframes float {
       0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.1); }
-      66% { transform: translate(-20px, 20px) scale(0.9); }
+      33% { transform: translate(50px, -50px) scale(1.1); }
+      66% { transform: translate(-30px, 50px) scale(0.9); }
     }
 
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 10;
       text-align: center;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 0 var(--space-6);
+      padding: 0 1.5rem;
     }
 
     /* Profile Avatar */
     .profile-avatar {
       position: relative;
-      width: 120px;
-      height: 120px;
-      margin: 0 auto var(--space-8);
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 2rem;
     }
 
     .avatar-glow {
       position: absolute;
-      inset: -10px;
-      background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+      inset: -4px;
+      background: linear-gradient(135deg, #FF7E31, #fb923c);
       border-radius: 50%;
-      filter: blur(20px);
-      opacity: 0.6;
+      filter: blur(15px);
+      opacity: 0.8;
       animation: pulse 3s ease-in-out infinite;
     }
 
@@ -221,15 +226,16 @@ import { RouterLink } from '@angular/router';
       position: relative;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: var(--text-4xl);
-      font-weight: var(--font-bold);
-      color: var(--text-primary);
-      box-shadow: var(--shadow-2xl);
+      font-size: 3rem;
+      font-weight: 700;
+      color: #FF7E31;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
 
     @keyframes pulse {
@@ -238,35 +244,49 @@ import { RouterLink } from '@angular/router';
     }
 
     .hero-title {
-      font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
-      font-weight: var(--font-bold);
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
-      line-height: var(--leading-tight);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      background: linear-gradient(to right, #fff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
     }
 
     .hero-subtitle {
-      font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
-      font-weight: var(--font-medium);
-      color: var(--text-secondary);
-      margin-bottom: var(--space-8);
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      font-weight: 500;
+      color: #94a3b8;
+      margin-bottom: 3rem;
     }
 
-    .intro-text {
-      max-width: 700px;
-      margin: 0 auto var(--space-10);
+    .intro-grid {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .intro-card {
+      max-width: 800px;
+      padding: 2rem;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      backdrop-filter: blur(12px);
     }
 
     .lead {
-      font-size: var(--text-lg);
-      line-height: var(--leading-relaxed);
-      color: var(--text-secondary);
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: #e2e8f0;
+      margin: 0;
     }
 
     /* Hero Buttons */
     .action-buttons {
       display: flex;
-      gap: var(--space-4);
+      gap: 1.5rem;
       justify-content: center;
       flex-wrap: wrap;
     }
@@ -274,229 +294,169 @@ import { RouterLink } from '@angular/router';
     .btn-hero {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-3);
-      padding: var(--space-4) var(--space-8);
-      font-size: var(--text-base);
-      font-weight: var(--font-semibold);
-      border-radius: var(--space-3);
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      border: 1px solid transparent;
     }
 
     .btn-hero i {
-      font-size: 1.25rem;
-      transition: transform 0.3s ease;
+      font-size: 1.4rem;
     }
 
     .btn-hero-primary {
-      background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
-      color: var(--text-primary);
-      box-shadow: 0 8px 24px rgba(255, 126, 49, 0.35), 0 4px 12px rgba(255, 126, 49, 0.2);
-      border: none;
-    }
-
-    .btn-hero-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--accent-orange-light) 0%, var(--accent-orange) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      background: linear-gradient(135deg, #FF7E31 0%, #ea580c 100%);
+      color: white;
+      box-shadow: 0 10px 15px -3px rgba(255, 126, 49, 0.3);
     }
 
     .btn-hero-primary:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(255, 126, 49, 0.5), 0 8px 20px rgba(255, 126, 49, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgba(255, 126, 49, 0.4);
+      filter: brightness(1.1);
     }
 
-    .btn-hero-primary:hover::before {
-      opacity: 1;
+    .btn-hero-github {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
 
-    .btn-hero-primary:hover i {
-      transform: translateX(4px);
+    .btn-hero-github:hover {
+      background: #24292e;
+      border-color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
 
-    .btn-hero-primary:active {
-      transform: translateY(-2px) scale(0.98);
+    .btn-hero-linkedin {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
 
-    .btn-hero-secondary {
+    .btn-hero-linkedin:hover {
+      background: #0077b5;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 119, 181, 0.4);
+    }
+
+    /* Glass Card Standard */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
       background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 126, 49, 0.3);
-      color: var(--text-primary);
-      backdrop-filter: blur(10px);
-      position: relative;
-    }
-
-    .btn-hero-secondary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 126, 49, 0.1) 0%, rgba(255, 126, 49, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: var(--space-3);
-    }
-
-    .btn-hero-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: var(--accent-orange);
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 12px 32px rgba(255, 126, 49, 0.25), 0 6px 16px rgba(255, 126, 49, 0.15);
-    }
-
-    .btn-hero-secondary:hover::before {
-      opacity: 1;
-    }
-
-    .btn-hero-secondary:hover i {
-      transform: scale(1.1);
-    }
-
-    .btn-hero-secondary:active {
-      transform: translateY(-2px) scale(0.98);
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-4px);
     }
 
     /* Context Section */
     .context-section {
-      padding: var(--space-20) 0;
-      position: relative;
+      padding: 6rem 0;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
     }
 
     .context-card {
       max-width: 900px;
       margin: 0 auto;
-      padding: var(--space-10);
-      position: relative;
-    }
-
-    /* Glassmorphism Effect */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--space-6);
-      backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-2xl);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 126, 49, 0.1) 0%, transparent 50%);
-      opacity: 0;
-      transition: var(--transition-base);
-    }
-
-    .glass-card:hover::before {
-      opacity: 1;
-    }
-
-    .card-glow {
-      position: absolute;
-      inset: -2px;
-      background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
-      border-radius: var(--space-6);
-      opacity: 0;
-      filter: blur(20px);
-      transition: var(--transition-base);
-      z-index: -1;
-    }
-
-    .glass-card:hover .card-glow {
-      opacity: 0.3;
+      padding: 3rem;
+      text-align: center;
     }
 
     .section-title {
-      font-size: var(--text-3xl);
-      font-weight: var(--font-bold);
-      color: var(--text-primary);
-      margin-bottom: var(--space-6);
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2rem;
+      text-align: center;
     }
 
     .context-description {
-      font-size: var(--text-lg);
-      color: var(--text-primary);
-      margin-bottom: var(--space-4);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #FF7E31;
+      margin-bottom: 1.5rem;
     }
 
     .context-details {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin: 0;
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #cbd5e1;
     }
 
     /* Tech Stack Section */
     .tech-stack-section {
-      padding: var(--space-20) 0;
+      padding: 6rem 0;
+      background: #0f172a;
     }
 
     .tech-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-6);
-      margin-top: var(--space-10);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
     }
 
     .tech-card {
-      padding: var(--space-8);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      transition: var(--transition-base);
-    }
-
-    .tech-card:hover {
-      transform: translateY(-8px);
+      height: 100%;
     }
 
     .tech-icon-wrapper {
       width: 80px;
       height: 80px;
-      margin: 0 auto var(--space-6);
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
-      border-radius: var(--space-4);
-      font-size: var(--text-5xl);
-      color: var(--text-primary);
-      box-shadow: var(--shadow-glow-md);
+      font-size: 3rem;
+      color: #FF7E31;
+      background: rgba(255, 126, 49, 0.1);
+      border-radius: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .tech-card:hover .tech-icon-wrapper {
+      transform: scale(1.1) rotate(5deg);
+      background: rgba(255, 126, 49, 0.2);
     }
 
     .tech-title {
-      font-size: var(--text-xl);
-      font-weight: var(--font-semibold);
-      color: var(--text-primary);
-      margin-bottom: var(--space-3);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
     }
 
     .tech-description {
-      font-size: var(--text-sm);
-      color: var(--text-tertiary);
-      margin: 0;
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.5;
     }
 
-    /* Animations */
-    .animate-fade-in { 
-      animation: fadeIn 1s ease-out; 
-      animation-fill-mode: both;
-    }
-    
-    .animate-fade-in-down { 
-      animation: fadeInDown 1s ease-out; 
-      animation-fill-mode: both;
-    }
-    
-    .animate-fade-in-up { 
-      animation: fadeInUp 1s ease-out; 
-      animation-fill-mode: both;
-    }
+    /* Animation Utilities */
+    .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+    .animate-fade-in-down { animation: fadeInDown 0.8s ease-out forwards; opacity: 0; }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
     
     .delay-100 { animation-delay: 0.1s; }
     .delay-150 { animation-delay: 0.15s; }
@@ -504,63 +464,27 @@ import { RouterLink } from '@angular/router';
     .delay-250 { animation-delay: 0.25s; }
     .delay-300 { animation-delay: 0.3s; }
 
-    @keyframes fadeIn { 
-      from { opacity: 0; } 
-      to { opacity: 1; } 
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
     
-    @keyframes fadeInDown { 
-      from { 
-        opacity: 0; 
-        transform: translateY(-30px); 
-      } 
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      } 
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
-    @keyframes fadeInUp { 
-      from { 
-        opacity: 0; 
-        transform: translateY(30px); 
-      } 
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      } 
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive Design */
+    /* Respnsive */
     @media (max-width: 768px) {
-      .hero-section {
-        min-height: auto;
-        padding: var(--space-12) 0;
-      }
-
-      .profile-avatar {
-        width: 100px;
-        height: 100px;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .btn-hero {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .tech-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .context-card,
-      .tech-card {
-        padding: var(--space-6);
-      }
+      .hero-title { font-size: 2.5rem; }
+      .hero-subtitle { font-size: 1.25rem; }
+      .action-buttons { flex-direction: column; width: 100%; }
+      .btn-hero { width: 100%; justify-content: center; }
+      .intro-card { padding: 1.5rem; }
     }
   `]
 })
