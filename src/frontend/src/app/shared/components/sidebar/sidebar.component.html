@@ -1,0 +1,22 @@
+<aside class="sidebar" [class.collapsed]="layoutService.isSidebarCollapsed()">
+      <div class="sidebar-header">
+        <div class="logo-container">
+          <img [src]="layoutService.isSidebarCollapsed() ? 'assets/collapse-icon.svg' : 'assets/expand-icon.svg'" 
+               alt="Luftborn Logo" 
+               class="sidebar-logo">
+        </div>
+        <button class="toggle-btn" (click)="layoutService.toggleSidebar()">
+          <i class="fas" [class.fa-chevron-left]="!layoutService.isSidebarCollapsed()" [class.fa-chevron-right]="layoutService.isSidebarCollapsed()"></i>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a routerLink="/products" routerLinkActive="active" class="nav-item">
+          <i class="fas fa-box"></i>
+          @if (!layoutService.isSidebarCollapsed()) {
+            <span>Products</span>
+          }
+        </a>
+        <!-- Add more nav items here -->
+      </nav>
+    </aside>
