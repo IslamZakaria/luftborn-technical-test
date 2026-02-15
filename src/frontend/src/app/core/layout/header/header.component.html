@@ -1,20 +1,6 @@
 <header class="header">
-  <div class="header-left">
-    <button (click)="toggleSidebar()" class="btn-icon sidebar-toggle" aria-label="Toggle Sidebar">
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
 
   <div class="header-right">
-    <!-- Actions -->
-    <button class="btn-icon" aria-label="Search">
-      <i class="fas fa-search"></i>
-    </button>
-    
-    <button class="btn-icon" aria-label="Notifications">
-      <i class="fas fa-bell"></i>
-    </button>
-
     <div class="user-menu">
       <div class="user-avatar">
         {{ (currentUser$ | async)?.firstName?.charAt(0) || 'U' }}{{ (currentUser$ | async)?.lastName?.charAt(0) || '' }}
