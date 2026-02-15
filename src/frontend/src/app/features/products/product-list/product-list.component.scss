@@ -43,7 +43,7 @@
 
 .header-actions {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-6);
     align-items: center;
 }
 
@@ -80,7 +80,7 @@
     border-spacing: 0;
 
     thead {
-        background: #0F131F;
+        background: var(--bg-secondary);
         /* Slightly darker than surface */
 
         th {

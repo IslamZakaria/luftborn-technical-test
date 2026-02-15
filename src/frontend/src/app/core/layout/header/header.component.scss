@@ -75,6 +75,8 @@
     .user-info {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
+        /* Align text to start */
 
         .user-name {
             color: var(--text-primary);
@@ -87,6 +89,16 @@
             color: var(--text-tertiary);
             font-size: var(--text-xs);
         }
+    }
+
+    .user-menu-icon {
+        color: var(--text-tertiary);
+        transition: transform 0.2s;
+    }
+
+    &:hover .user-menu-icon {
+        color: var(--text-primary);
+        transform: translateY(2px);
     }
 }
 
