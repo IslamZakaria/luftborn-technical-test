@@ -1,0 +1,46 @@
+<div class="register-page" [class.page-exit]="isAnimating">
+      <div class="auth-container">
+        <div class="card auth-card">
+          <div class="brand-header">
+            <img src="assets/collapse-icon.svg" alt="Luftborn" class="brand-logo">
+          </div>
+          <h1>Create Account</h1>
+          <p class="subtitle">Join us and start managing your products</p>
+          
+          <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" [(ngModel)]="name" name="name" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" [(ngModel)]="email" name="email" required placeholder="name@company.com">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" [(ngModel)]="password" name="password" required placeholder="••••••••" minlength="6">
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required placeholder="••••••••">
+            </div>
+            @if (error) {
+              <div class="error-message">
+                <span class="icon">!</span> {{ error }}
+              </div>
+            }
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="loading || !registerForm.valid || password !== confirmPassword">
+              @if (loading) {
+                <span class="spinner-sm"></span> Processing...
+              } @else {
+                Create Account
+              }
+            </button>
+          </form>
+          
+          <div class="auth-footer">
+            <p>Already have an account? <a routerLink="/auth/login">Sign in</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
