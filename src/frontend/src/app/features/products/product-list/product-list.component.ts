@@ -8,7 +8,7 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, ProductFormComponent],
+  imports: [CommonModule, FormsModule, ProductFormComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })

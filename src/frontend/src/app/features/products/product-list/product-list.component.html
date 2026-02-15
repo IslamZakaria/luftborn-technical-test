@@ -32,7 +32,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Image</th>
+              <th style="width: 80px;">Image</th>
               <th>Name</th>
               <th>SKU</th>
               <th>Price</th>
@@ -57,16 +57,20 @@
               @for (product of products; track product.id) {
                 <tr>
                   <td>
-                    @if (product.imageUrl) {
-                      <img [src]="product.imageUrl" [alt]="product.name" class="product-thumbnail">
-                    } @else {
-                      <div class="product-thumbnail-placeholder">
-                        <i class="fas fa-image"></i>
-                      </div>
-                    }
+                    <div class="product-thumbnail-wrapper">
+                      @if (product.imageUrl) {
+                        <img [src]="product.imageUrl" [alt]="product.name" class="product-thumbnail">
+                      } @else {
+                        <div class="product-thumbnail-placeholder">
+                          <i class="fas fa-image"></i>
+                        </div>
+                      }
+                    </div>
                   </td>
                   <td>
-                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-info">
+                        <span class="product-name">{{ product.name }}</span>
+                    </div>
                   </td>
                   <td>
                     <span class="sku">{{ product.sku }}</span>
@@ -75,28 +79,29 @@
                     <span class="price">\${{ product.price.toFixed(2) }}</span>
                   </td>
                   <td>
-                    <span class="stock" [class.low-stock]="product.stockQuantity < 10">
+                    <span class="stock" [class.low-stock]="product.stockQuantity < 10" [class.out-of-stock]="product.stockQuantity === 0">
                       {{ product.stockQuantity }}
                     </span>
                   </td>
                   <td>
-                    <span class="category">{{ product.categoryName }}</span>
+                    <span class="category-badge">{{ product.categoryName }}</span>
                   </td>
                   <td>
-                    <span class="badge" [class.badge-success]="product.isActive" [class.badge-secondary]="!product.isActive">
+                    <span class="status-badge" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+                      <span class="status-dot"></span>
                       {{ product.isActive ? 'Active' : 'Inactive' }}
                     </span>
                   </td>
                   <td class="actions-column">
                     <div class="action-buttons">
-                      <button (click)="viewDetails(product)" class="btn-icon" title="View Details">
+                      <button (click)="viewDetails(product)" class="btn-icon btn-action" title="View Details">
                         <i class="fas fa-eye"></i>
                       </button>
-                      <button (click)="openEditDialog(product)" class="btn-icon" title="Edit">
-                        <i class="fas fa-edit"></i>
+                      <button (click)="openEditDialog(product)" class="btn-icon btn-action" title="Edit">
+                        <i class="fas fa-pen"></i>
                       </button>
                       <button (click)="confirmDelete(product)" class="btn-icon btn-danger" title="Delete">
-                        <i class="fas fa-trash"></i>
+                        <i class="fas fa-trash-alt"></i>
                       </button>
                     </div>
                   </td>
@@ -111,32 +116,33 @@
       @if (pagedResult.totalCount > 0) {
         <div class="pagination-container">
           <div class="pagination-info">
-            <span>Showing {{ startIndex }} to {{ endIndex }} of {{ pagedResult.totalCount }} products</span>
-            <div class="page-size-selector">
-              <label for="pageSize">Items per page:</label>
-              <select id="pageSize" [(ngModel)]="pagedResult.pageSize" (change)="onPageSizeChange()" class="select">
-                @for (size of pageSizeOptions; track size) {
-                  <option [value]="size">{{ size }}</option>
-                }
-              </select>
-            </div>
+            <span>Showing {{ startIndex }} - {{ endIndex }} of {{ pagedResult.totalCount }}</span>
           </div>
-          <div class="pagination-controls">
-            <button (click)="firstPage()" [disabled]="!pagedResult.hasPreviousPage" class="btn btn-ghost" title="First Page">
-              <i class="fas fa-angle-double-left"></i>
-            </button>
-            <button (click)="previousPage()" [disabled]="!pagedResult.hasPreviousPage" class="btn btn-ghost">
-              <i class="fas fa-angle-left"></i>
-              <span>Previous</span>
-            </button>
-            <span class="page-indicator">Page {{ pagedResult.pageNumber }} of {{ pagedResult.totalPages }}</span>
-            <button (click)="nextPage()" [disabled]="!pagedResult.hasNextPage" class="btn btn-ghost">
-              <span>Next</span>
-              <i class="fas fa-angle-right"></i>
-            </button>
-            <button (click)="lastPage()" [disabled]="!pagedResult.hasNextPage" class="btn btn-ghost" title="Last Page">
-              <i class="fas fa-angle-double-right"></i>
-            </button>
+          <div class="pagination-actions">
+              <div class="page-size-selector">
+                <label for="pageSize">Rows per page:</label>
+                <select id="pageSize" [(ngModel)]="pagedResult.pageSize" (change)="onPageSizeChange()" class="select-sm">
+                  @for (size of pageSizeOptions; track size) {
+                    <option [value]="size">{{ size }}</option>
+                  }
+                </select>
+              </div>
+              
+              <div class="pagination-controls">
+                <button (click)="firstPage()" [disabled]="!pagedResult.hasPreviousPage" class="btn-icon-sm" title="First Page">
+                  <i class="fas fa-angle-double-left"></i>
+                </button>
+                <button (click)="previousPage()" [disabled]="!pagedResult.hasPreviousPage" class="btn-icon-sm" title="Previous">
+                  <i class="fas fa-angle-left"></i>
+                </button>
+                <span class="page-indicator">{{ pagedResult.pageNumber }} / {{ pagedResult.totalPages }}</span>
+                <button (click)="nextPage()" [disabled]="!pagedResult.hasNextPage" class="btn-icon-sm" title="Next">
+                  <i class="fas fa-angle-right"></i>
+                </button>
+                <button (click)="lastPage()" [disabled]="!pagedResult.hasNextPage" class="btn-icon-sm" title="Last Page">
+                  <i class="fas fa-angle-double-right"></i>
+                </button>
+              </div>
           </div>
         </div>
       }
@@ -146,10 +152,13 @@
   <!-- Form Dialog -->
   @if (showFormDialog) {
     <div class="modal-overlay" (click)="closeFormDialog()">
-      <div class="modal modal-lg" (click)="$event.stopPropagation()">
+      <div class="modal modal-lg fade-in-up" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <h3 class="modal-title">{{ editingProduct ? 'Edit Product' : 'Add Product' }}</h3>
-          <button (click)="closeFormDialog()" class="btn-icon">
+          <h3 class="modal-title">
+              <i class="fas" [class.fa-plus-circle]="!editingProduct" [class.fa-edit]="editingProduct"></i>
+              {{ editingProduct ? 'Edit Product' : 'Create New Product' }}
+          </h3>
+          <button (click)="closeFormDialog()" class="clse-btn">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -168,65 +177,78 @@
   <!-- Details Dialog -->
   @if (showDetailsDialog && selectedProduct) {
     <div class="modal-overlay" (click)="closeDetailsDialog()">
-      <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal fade-in-up" (click)="$event.stopPropagation()">
         <div class="modal-header">
           <h3 class="modal-title">Product Details</h3>
-          <button (click)="closeDetailsDialog()" class="btn-icon">
+          <button (click)="closeDetailsDialog()" class="clse-btn">
             <i class="fas fa-times"></i>
           </button>
         </div>
         <div class="modal-body">
-          @if (selectedProduct.imageUrl) {
-            <img [src]="selectedProduct.imageUrl" [alt]="selectedProduct.name" class="detail-image">
-          }
-          <div class="detail-grid">
-            <div class="detail-item">
-              <label>Name</label>
-              <p>{{ selectedProduct.name }}</p>
-            </div>
-            <div class="detail-item">
-              <label>SKU</label>
-              <p>{{ selectedProduct.sku }}</p>
-            </div>
-            <div class="detail-item">
-              <label>Description</label>
-              <p>{{ selectedProduct.description }}</p>
-            </div>
-            <div class="detail-item">
-              <label>Price</label>
-              <p class="price">\${{ selectedProduct.price.toFixed(2) }}</p>
-            </div>
-            <div class="detail-item">
-              <label>Stock Quantity</label>
-              <p>{{ selectedProduct.stockQuantity }}</p>
-            </div>
-            <div class="detail-item">
-              <label>Category</label>
-              <p>{{ selectedProduct.categoryName }}</p>
-            </div>
-            <div class="detail-item">
-              <label>Status</label>
-              <p>
-                <span class="badge" [class.badge-success]="selectedProduct.isActive" [class.badge-secondary]="!selectedProduct.isActive">
-                  {{ selectedProduct.isActive ? 'Active' : 'Inactive' }}
-                </span>
-              </p>
-            </div>
-            <div class="detail-item">
-              <label>Created</label>
-              <p>{{ selectedProduct.createdAt | date:'medium' }}</p>
-            </div>
-            @if (selectedProduct.updatedAt) {
-              <div class="detail-item">
-                <label>Last Updated</label>
-                <p>{{ selectedProduct.updatedAt | date:'medium' }}</p>
+          <div class="details-content">
+              @if (selectedProduct.imageUrl) {
+                <div class="detail-image-wrapper">
+                    <img [src]="selectedProduct.imageUrl" [alt]="selectedProduct.name" class="detail-image">
+                </div>
+              }
+              
+              <div class="detail-grid">
+                <div class="detail-item full-width">
+                  <label>Product Name</label>
+                  <p class="highlight-text">{{ selectedProduct.name }}</p>
+                </div>
+                
+                <div class="detail-item">
+                  <label>SKU</label>
+                  <p class="mono-text">{{ selectedProduct.sku }}</p>
+                </div>
+                
+                <div class="detail-item">
+                  <label>Price</label>
+                  <p class="price-text">\${{ selectedProduct.price.toFixed(2) }}</p>
+                </div>
+
+                <div class="detail-item">
+                   <label>Category</label>
+                   <p>{{ selectedProduct.categoryName }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <label>Stock Status</label>
+                    <p>
+                        <span class="stock-display" [class.low-stock]="selectedProduct.stockQuantity < 10">
+                            {{ selectedProduct.stockQuantity }} units
+                        </span>
+                    </p>
+                 </div>
+                
+                <div class="detail-item">
+                  <label>Status</label>
+                  <p>
+                    <span class="status-badge" [class.active]="selectedProduct.isActive" [class.inactive]="!selectedProduct.isActive">
+                      <span class="status-dot"></span>
+                      {{ selectedProduct.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  </p>
+                </div>
+
+                <div class="detail-item full-width">
+                  <label>Description</label>
+                  <p class="description-text">{{ selectedProduct.description }}</p>
+                </div>
+                
+                <div class="detail-item">
+                  <label>Created At</label>
+                  <p class="meta-text">{{ selectedProduct.createdAt | date:'mediumDate' }}</p>
+                </div>
               </div>
-            }
           </div>
         </div>
         <div class="modal-footer">
           <button (click)="closeDetailsDialog()" class="btn btn-secondary">Close</button>
-          <button (click)="openEditDialog(selectedProduct); closeDetailsDialog()" class="btn btn-primary">Edit Product</button>
+          <button (click)="openEditDialog(selectedProduct); closeDetailsDialog()" class="btn btn-primary">
+              <i class="fas fa-edit"></i> Edit Product
+          </button>
         </div>
       </div>
     </div>
@@ -235,24 +257,23 @@
   <!-- Delete Confirmation Dialog -->
   @if (showDeleteConfirm && productToDelete) {
     <div class="modal-overlay" (click)="cancelDelete()">
-      <div class="modal modal-sm" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h3 class="modal-title">Confirm Delete</h3>
-          <button (click)="cancelDelete()" class="btn-icon">
-            <i class="fas fa-times"></i>
-          </button>
+      <div class="modal modal-sm fade-in-up" (click)="$event.stopPropagation()">
+        <div class="modal-header border-0 pb-0">
+          <h3 class="modal-title text-danger">
+              <i class="fas fa-exclamation-triangle"></i> Confirm Delete
+          </h3>
         </div>
         <div class="modal-body">
-          <p>Are you sure you want to delete <strong>{{ productToDelete.name }}</strong>?</p>
-          <p class="text-muted">This action cannot be undone.</p>
+          <p class="confirm-message">Are you sure you want to delete <strong>{{ productToDelete.name }}</strong>?</p>
+          <p class="confirm-subtext">This action cannot be undone.</p>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer border-0 pt-0">
           <button (click)="cancelDelete()" class="btn btn-secondary">Cancel</button>
           <button (click)="deleteProduct()" class="btn btn-danger" [disabled]="loading">
             @if (loading) {
               <span class="spinner"></span>
             }
-            <span>Delete</span>
+            <span>Delete Product</span>
           </button>
         </div>
       </div>
