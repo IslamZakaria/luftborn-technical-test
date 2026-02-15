@@ -1,0 +1,31 @@
+.card {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.form-control,
+.form-select {
+    border-color: var(--border-subtle);
+    padding: 0.6rem 0.8rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 0 0.2rem rgba(255, 126, 49, 0.25);
+}
+
+.btn-primary {
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
+}
+
+.btn-primary:hover {
+    background: var(--accent-orange-dark);
+    border-color: var(--accent-orange-dark);
+}
