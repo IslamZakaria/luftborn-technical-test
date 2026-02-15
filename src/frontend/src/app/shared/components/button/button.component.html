@@ -1,0 +1,10 @@
+<button 
+      [type]="type" 
+      [class]="'btn btn-' + variant" 
+      [disabled]="disabled" 
+      (click)="handleClick($event)">
+      <span *ngIf="icon" class="icon-slot">
+        <i [class]="icon"></i> <!-- Assuming font awesome or similar, or replace with img/svg -->
+      </span>
+      <ng-content></ng-content>
+    </button>
