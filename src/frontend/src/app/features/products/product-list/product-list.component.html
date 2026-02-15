@@ -32,8 +32,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th style="width: 80px;">Image</th>
-              <th>Name</th>
+              <th class="image-column">Product</th>
               <th>SKU</th>
               <th>Price</th>
               <th>Stock</th>
@@ -45,62 +44,72 @@
           <tbody>
             @if (products.length === 0) {
               <tr>
-                <td colspan="8" class="no-data">
+                <td colspan="7" class="no-data">
                   <div class="empty-state">
-                    <i class="fas fa-box-open"></i>
-                    <p>No products found</p>
-                    <button (click)="openAddDialog()" class="btn btn-primary">Create your first product</button>
+                    <div class="empty-icon-wrapper">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>No products found</h3>
+                    <p>Get started by creating your first product in the catalog.</p>
+                    <button (click)="openAddDialog()" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
                   </div>
                 </td>
               </tr>
             } @else {
               @for (product of products; track product.id) {
                 <tr>
-                  <td>
-                    <div class="product-thumbnail-wrapper">
-                      @if (product.imageUrl) {
-                        <img [src]="product.imageUrl" [alt]="product.name" class="product-thumbnail">
-                      } @else {
-                        <div class="product-thumbnail-placeholder">
-                          <i class="fas fa-image"></i>
+                  <td class="image-column">
+                    <div class="product-cell">
+                        <div class="product-thumbnail-wrapper" (click)="viewDetails(product)">
+                          @if (product.imageUrl) {
+                            <img [src]="product.imageUrl" [alt]="product.name" class="product-thumbnail">
+                          } @else {
+                            <div class="product-thumbnail-placeholder">
+                              <i class="fas fa-image"></i>
+                            </div>
+                          }
+                          <div class="thumbnail-overlay">
+                              <i class="fas fa-search-plus"></i>
+                          </div>
                         </div>
-                      }
+                        <div class="product-basic-info">
+                            <span class="product-name" (click)="viewDetails(product)">{{ product.name }}</span>
+                            <span class="product-category-hint">{{ product.categoryName }}</span>
+                        </div>
                     </div>
                   </td>
                   <td>
-                    <div class="product-info">
-                        <span class="product-name">{{ product.name }}</span>
+                    <span class="sku-badge">{{ product.sku }}</span>
+                  </td>
+                  <td>
+                    <span class="price-text">\${{ product.price.toFixed(2) }}</span>
+                  </td>
+                  <td>
+                    <div class="stock-info" [class.low-stock]="product.stockQuantity < 10 && product.stockQuantity > 0" [class.out-of-stock]="product.stockQuantity === 0">
+                        <span class="stock-count">{{ product.stockQuantity }}</span>
+                        <span class="stock-label">{{ product.stockQuantity === 0 ? 'Out of Stock' : (product.stockQuantity < 10 ? 'Low Stock' : 'In Stock') }}</span>
                     </div>
                   </td>
                   <td>
-                    <span class="sku">{{ product.sku }}</span>
+                    <span class="category-tag">{{ product.categoryName }}</span>
                   </td>
                   <td>
-                    <span class="price">\${{ product.price.toFixed(2) }}</span>
-                  </td>
-                  <td>
-                    <span class="stock" [class.low-stock]="product.stockQuantity < 10" [class.out-of-stock]="product.stockQuantity === 0">
-                      {{ product.stockQuantity }}
-                    </span>
-                  </td>
-                  <td>
-                    <span class="category-badge">{{ product.categoryName }}</span>
-                  </td>
-                  <td>
-                    <span class="status-badge" [class.active]="product.isActive" [class.inactive]="!product.isActive">
-                      <span class="status-dot"></span>
+                    <span class="status-pill" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+                      <span class="status-blob"></span>
                       {{ product.isActive ? 'Active' : 'Inactive' }}
                     </span>
                   </td>
                   <td class="actions-column">
-                    <div class="action-buttons">
-                      <button (click)="viewDetails(product)" class="btn-icon btn-action" title="View Details">
+                    <div class="action-group">
+                      <button (click)="viewDetails(product)" class="action-btn view" title="View Details">
                         <i class="fas fa-eye"></i>
                       </button>
-                      <button (click)="openEditDialog(product)" class="btn-icon btn-action" title="Edit">
+                      <button (click)="openEditDialog(product)" class="action-btn edit" title="Edit">
                         <i class="fas fa-pen"></i>
                       </button>
-                      <button (click)="confirmDelete(product)" class="btn-icon btn-danger" title="Delete">
+                      <button (click)="confirmDelete(product)" class="action-btn delete" title="Delete">
                         <i class="fas fa-trash-alt"></i>
                       </button>
                     </div>

@@ -1,99 +1,165 @@
 .sidebar {
-    width: 250px;
+    width: 260px;
     height: 100vh;
     background: #02071A;
-    /* Brand color */
     color: #fff;
-    transition: width 0.3s ease;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     position: fixed;
     left: 0;
-    top: 0;
-    z-index: 1000;
+    top: 64px;
+    /* Account for header height */
+    height: calc(100vh - 64px);
+    z-index: 90;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebar.collapsed {
-    width: 70px;
+    width: 80px;
+
+    .logo-text {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .nav-item span {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+    }
 }
 
 .sidebar-header {
-    padding: 1rem;
+    padding: 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: 80px;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     overflow: hidden;
 }
 
 .sidebar-logo {
     height: 32px;
     width: 32px;
+    flex-shrink: 0;
 }
 
 .logo-text {
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-weight: 800;
+    font-size: 1.25rem;
     white-space: nowrap;
-}
-
-.toggle-btn {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    padding: 0.5rem;
-
-    &:hover {
-        color: #fff;
-    }
+    letter-spacing: 1px;
+    color: #FF7E31;
+    transition: all 0.2s ease;
 }
 
 .sidebar-nav {
-    padding: 1rem 0;
+    padding: 1rem 0.75rem;
     flex: 1;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1.5rem;
-    color: rgba(255, 255, 255, 0.7);
+    padding: 0.875rem 1.25rem;
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     white-space: nowrap;
-    transition: all 0.2s;
-    gap: 1rem;
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-    }
-
-    &.active {
-        background: #FF7E31;
-        /* Brand accent color */
-        color: #fff;
-    }
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 1.25rem;
+    border-radius: 12px;
 
     i {
         width: 20px;
+        font-size: 1.1rem;
         text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+    span {
+        font-weight: 500;
+        transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+        background: rgba(255, 126, 49, 0.08);
+        color: #fff;
+
+        i {
+            color: #FF7E31;
+            transform: scale(1.1);
+        }
+    }
+
+    &.active {
+        background: linear-gradient(135deg, #FF7E31 0%, #FF9A56 100%);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(255, 126, 49, 0.3);
+
+        i {
+            color: #fff;
+        }
     }
 }
 
-.sidebar.collapsed .nav-item {
-    justify-content: center;
-    padding: 0.75rem 0;
+.sidebar-footer {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    align-items: center;
+}
 
-    span {
-        display: none;
+.toggle-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #FF7E31;
+        color: #fff;
+        border-color: #FF7E31;
+        box-shadow: 0 4px 12px rgba(255, 126, 49, 0.4);
+        transform: scale(1.05);
     }
+
+    i {
+        font-size: 0.9rem;
+    }
+}
+
+.sidebar.collapsed .sidebar-footer {
+    justify-content: center;
+}
+
+/* Scrollbar styling */
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }

@@ -5,7 +5,7 @@
     padding: 0 var(--space-8);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     position: sticky;
     top: 0;
     z-index: 999;
@@ -45,60 +45,32 @@
     .user-menu {
         display: flex;
         align-items: center;
-        gap: var(--space-3);
-        padding: var(--space-2) var(--space-3);
-        border-radius: var(--space-2);
+        justify-content: center;
         cursor: pointer;
         transition: var(--transition-base);
         margin-left: var(--space-4);
-        border-left: 1px solid var(--border-subtle);
 
-        &:hover {
-            background: var(--bg-secondary);
+        &:hover .user-avatar {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 4px rgba(255, 126, 49, 0.2);
         }
     }
 
     .user-avatar {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--accent-orange), var(--accent-orange-light));
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-weight: var(--font-semibold);
+        font-weight: var(--font-bold);
         font-size: var(--text-sm);
         flex-shrink: 0;
-    }
-
-    .user-info {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        /* Align text to start */
-
-        .user-name {
-            color: var(--text-primary);
-            font-weight: var(--font-medium);
-            font-size: var(--text-sm);
-            white-space: nowrap;
-        }
-
-        .user-role {
-            color: var(--text-tertiary);
-            font-size: var(--text-xs);
-        }
-    }
-
-    .user-menu-icon {
-        color: var(--text-tertiary);
-        transition: transform 0.2s;
-    }
-
-    &:hover .user-menu-icon {
-        color: var(--text-primary);
-        transform: translateY(2px);
+        box-shadow: var(--shadow-glow-sm);
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.1);
     }
 }
 

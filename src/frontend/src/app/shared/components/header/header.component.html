@@ -1,18 +1,56 @@
 <header class="header">
-      <div class="container">
-        <div class="header-content">
-          <div class="logo">
-            <a routerLink="/">LUFTBORN</a>
-          </div>
-          <nav class="nav">
-            <a routerLink="/products" class="nav-link">Products</a>
-            @if (isAuthenticated()) {
-              <a routerLink="/products/create" class="nav-link">Create Product</a>
-              <button (click)="logout()" class="btn btn-secondary">Logout</button>
-            } @else {
-              <a routerLink="/auth/login" class="btn btn-primary">Login</a>
-            }
-          </nav>
-        </div>
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a routerLink="/">LUFTBORN</a>
       </div>
-    </header>
+      
+      <nav class="nav">
+        @if (isAuthenticated()) {
+          <a routerLink="/products" class="nav-link">Products</a>
+        } @else {
+          <a routerLink="/auth/login" class="btn btn-primary">Login</a>
+        }
+      </nav>
+      
+      <!-- User Menu (Top Right) -->
+      @if (isAuthenticated()) {
+        <div class="user-menu">
+            <button class="user-avatar-btn" (click)="toggleUserDropdown()">
+              <div class="user-avatar">
+                <span class="user-initials">{{ getUserInitials() }}</span>
+              </div>
+              <span class="user-name">{{ getUserFullName() }}</span>
+              <i class="fas fa-chevron-down dropdown-icon" [class.rotated]="showUserDropdown"></i>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            @if (showUserDropdown) {
+              <div class="user-dropdown">
+                <div class="dropdown-header">
+                  <div class="user-avatar-large">
+                    <span class="user-initials">{{ getUserInitials() }}</span>
+                  </div>
+                  <div class="user-info">
+                    <p class="user-name-text">{{ getUserFullName() }}</p>
+                    <p class="user-email">{{ getUserEmail() }}</p>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-body">
+                  <a routerLink="/products" class="dropdown-item" (click)="showUserDropdown = false">
+                    <i class="fas fa-box"></i>
+                    <span>My Products</span>
+                  </a>
+                  <button (click)="logout()" class="dropdown-item logout-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+    </div>
+  </div>
+</header>
